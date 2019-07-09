@@ -11,7 +11,9 @@ public class DroneCtrl : MonoBehaviour
     public float currWingSpeed = 0.0f;
 
     [Header("Move Speed")]
-    public float updownSpeed = 10.0f;
+    public float updownSpeed  = 10.0f;   //상승,하강 속도
+    public float forwardSpeed = 10.0f;   //전,후진 속도
+    public float sideSpeed    = 8.0f;    //좌,우 이동속도
 
     private Joystick leftJoyStick; //UP,DOWN : 상승,하강
     private Joystick rightJoyStick;//UP,DOWN : 전진,후진 /LEFT, RIGHT : 왼쪽이동, 오른쪽이동
@@ -49,6 +51,8 @@ public class DroneCtrl : MonoBehaviour
 
         RotateWings();
         UpDownMove(throttle);
+        ForwardMove(rightJoyStick.Vertical);
+        SideMove(rightJoyStick.Horizontal);
     }
 
     void RotateWings()
@@ -62,5 +66,17 @@ public class DroneCtrl : MonoBehaviour
     void UpDownMove(float damping)
     {
         tr.Translate(Vector3.up * Time.deltaTime * updownSpeed * damping);
+    }
+
+    // 전진 후진 이동
+    void ForwardMove(float damping)
+    {
+        tr.Translate(Vector3.forward * Time.deltaTime * forwardSpeed * damping);
+    }
+
+    // 좌우 이동
+    void SideMove(float damping)
+    {
+        tr.Translate(Vector3.right * Time.deltaTime * sideSpeed * damping);
     }
 }

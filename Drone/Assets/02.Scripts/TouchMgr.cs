@@ -29,7 +29,9 @@ public class TouchMgr : MonoBehaviour
             //스크린 x,y 좌푯값, 필터, 결괏값
             if (Frame.Raycast(touch.position.x, touch.position.y, flags, out hit))
             {
+                //3차원 공간좌표를 기억하는 앵커를 생성
                 Anchor anchor = hit.Trackable.CreateAnchor(hit.Pose);
+                //드론 생성
                 Instantiate(drone, hit.Pose.position, hit.Pose.rotation, anchor.transform);
                 //드론의 생성여부
                 isCreated = true;

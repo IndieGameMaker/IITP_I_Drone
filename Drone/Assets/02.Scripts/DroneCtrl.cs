@@ -5,14 +5,23 @@ using UnityEngine;
 public class DroneCtrl : MonoBehaviour
 {
     public Transform[] wings;
+
+    [Header("Wing Speed")]
     public float maxWingSpeed = 3000.0f;
     public float currWingSpeed = 0.0f;
 
-    public Joystick leftJoyStick; //UP,DOWN : 상승,하강
-    public Joystick rightJoyStick;//UP,DOWN : 전진,후진 /LEFT, RIGHT : Y축 회전(Yaw) 
+    [Header("Move Speed")]
+    public float updownSpeed = 10.0f;
+
+    private Joystick leftJoyStick; //UP,DOWN : 상승,하강
+    private Joystick rightJoyStick;//UP,DOWN : 전진,후진 /LEFT, RIGHT : 왼쪽이동, 오른쪽이동
+
+    private Transform tr;
 
     void Start()
     {
+        tr = GetComponent<Transform>();
+
         //동적으로 생성된 드론의 조이스틱 연결
         leftJoyStick = GameObject.Find("Fixed Joystick - Left").GetComponent<Joystick>();
         rightJoyStick = GameObject.Find("Fixed Joystick - Right").GetComponent<Joystick>();
@@ -36,7 +45,10 @@ public class DroneCtrl : MonoBehaviour
 
     void Update()
     {
+        float throttle = leftJoyStick.Vertical; //-1.0f ~ +1.0f
+
         RotateWings();
+        UpDownMove(throttle);
     }
 
     void RotateWings()
@@ -45,5 +57,10 @@ public class DroneCtrl : MonoBehaviour
         {
             wings[i].Rotate(Vector3.up * Time.deltaTime * currWingSpeed);
         }
+    }
+
+    void UpDownMove(float damping)
+    {
+        tr.Translate(Vector3.up * Time.deltaTime * updownSpeed * damping);
     }
 }

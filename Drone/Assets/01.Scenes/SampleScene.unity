@@ -843,7 +843,9 @@ MonoBehaviour:
   - {fileID: 1065523048}
   - {fileID: 1798004342}
   - {fileID: 1564329177}
-  wingSpeed: 3000
+  maxWingSpeed: 3000
+  currWingSpeed: 0
+  updownSpeed: 10
 --- !u!224 &1076974307 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252,
